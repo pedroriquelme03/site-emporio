@@ -9,7 +9,7 @@ const Testimonials = () => {
       name: "Renata Vasconcelos",
       role: "Arquiteta",
       content: "A qualidade do acabamento do Empório é impecável. Como profissional, prezo muito pelo prazo e suporte, e eles entregam excelência em ambos.",
-      image: "https://i.pravatar.cc/150?u=renata"
+      image: "https://i.pravatar.cc/150?u=jose"
     },
     {
       name: "Marcos Paulo Silveira",
@@ -21,7 +21,7 @@ const Testimonials = () => {
       name: "Ana Julia Schmidt",
       role: "Designer de Interiores",
       content: "Minha parceria com o Empório das Cortinas já dura anos. É a confiança de saber que meu cliente será atendido com o luxo que merece.",
-      image: "https://i.pravatar.cc/150?u=ana"
+      image: "https://i.pravatar.cc/150?u=mateus"
     }
   ];
 

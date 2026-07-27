@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Instagram, Facebook, Phone, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../constants';
 import { cn } from '../lib/utils';
@@ -18,48 +18,46 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isHome = location.pathname === '/';
+
   return (
-    <nav 
+    <nav
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-4 md:px-12",
-        isScrolled ? "bg-white/90 backdrop-blur-md py-4 shadow-sm" : "bg-transparent text-white"
+        'fixed top-0 left-0 w-full z-50 transition-all duration-500 px-4 md:px-12 text-white',
+        isHome
+          ? isScrolled
+            ? 'bg-transparent py-0 opacity-0 hover:opacity-100 hover:bg-black hover:backdrop-blur-md hover:py-4 hover:shadow-lg'
+            : 'bg-transparent py-4 opacity-100'
+          : isScrolled
+          ? 'bg-transparent py-0 opacity-0 hover:opacity-100 hover:bg-black hover:backdrop-blur-md hover:py-4 hover:shadow-lg'
+          : 'bg-black/70 backdrop-blur-sm py-4 opacity-100 shadow-sm'
       )}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-serif tracking-widest font-bold">
-          EMPÓRIO <span className={isScrolled ? "text-brand-accent" : "text-brand-accent"}>DAS CORTINAS</span>
+        <Link to="/" className="text-2xl font-serif tracking-widest font-bold text-brand-accent">
+          EMPÓRIO DAS CORTINAS
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-10 text-sm uppercase tracking-widest font-medium">
           {ROUTES.map((route) => (
-            <Link 
-              key={route.path} 
+            <Link
+              key={route.path}
               to={route.path}
               className={cn(
-                "hover:text-brand-accent transition-colors relative group",
-                location.pathname === route.path ? "text-brand-accent" : (isScrolled ? "text-brand-primary" : "text-white")
+                'hover:text-brand-accent transition-colors',
+                location.pathname === route.path ? 'text-brand-accent' : 'text-white/80'
               )}
             >
               {route.name}
-              <span className={cn(
-                "absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-accent transition-all duration-300 group-hover:w-full",
-                location.pathname === route.path && "w-full"
-              )} />
             </Link>
           ))}
-          <a 
-            href="https://wa.me/554535264647" 
-            className="px-6 py-2 border-brand-accent border text-brand-accent hover:bg-brand-accent hover:text-white transition-all duration-300"
-          >
-            CONSULTORIA
-          </a>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)} 
-          className={cn("md:hidden", isScrolled ? "text-brand-primary" : "text-white")}
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-white focus:outline-none"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -72,22 +70,22 @@ export const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-white text-brand-primary shadow-xl p-8 md:hidden flex flex-col space-y-6 text-center text-lg font-serif"
+            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md py-6 px-4"
           >
-            {ROUTES.map((route) => (
-              <Link 
-                key={route.path} 
-                to={route.path} 
-                onClick={() => setIsOpen(false)}
-                className="hover:text-brand-accent transition-colors"
-              >
-                {route.name}
-              </Link>
-            ))}
-            <div className="pt-4 flex justify-center space-x-6">
-              <Instagram className="text-brand-accent cursor-pointer" />
-              <Facebook className="text-brand-accent cursor-pointer" />
-              <MessageCircle className="text-brand-accent cursor-pointer" />
+            <div className="flex flex-col space-y-4 text-sm uppercase tracking-widest font-medium">
+              {ROUTES.map((route) => (
+                <Link
+                  key={route.path}
+                  to={route.path}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    'hover:text-brand-accent transition-colors',
+                    location.pathname === route.path ? 'text-brand-accent' : 'text-white/80'
+                  )}
+                >
+                  {route.name}
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}
@@ -96,58 +94,18 @@ export const Navbar = () => {
   );
 };
 
+// ============= FOOTER =============
 export const Footer = () => {
   return (
-    <footer className="bg-brand-primary text-white py-20 px-4 md:px-12 border-t border-white/10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="space-y-6">
-          <h2 className="text-2xl font-serif tracking-widest">EMPÓRIO DAS CORTINAS</h2>
-          <p className="text-brand-muted text-sm leading-relaxed max-w-xs">
-            Desde 2006 transformando ambientes com sofisticação, exclusividade e atendimento personalizado de alto padrão.
-          </p>
-          <div className="flex space-x-4">
-             <a href="#" className="hover:text-brand-accent transition-colors"><Instagram size={20} /></a>
-             <a href="#" className="hover:text-brand-accent transition-colors"><Facebook size={20} /></a>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-brand-accent font-serif text-lg mb-6">Links Rápidos</h3>
-          <ul className="space-y-3 text-brand-muted text-sm">
-            {ROUTES.map(r => (
-              <li key={r.path}><Link to={r.path} className="hover:text-white transition-colors">{r.name}</Link></li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-brand-accent font-serif text-lg mb-6">Nossos Produtos</h3>
-          <ul className="space-y-3 text-brand-muted text-sm">
-            <li><Link to="/produtos/cortinas" className="hover:text-white transition-colors">Cortinas Sob Medida</Link></li>
-            <li><Link to="/produtos/persianas" className="hover:text-white transition-colors">Persianas</Link></li>
-            <li><Link to="/produtos/moveis" className="hover:text-white transition-colors">Móveis de Luxo</Link></li>
-            <li><Link to="/produtos/decoracao" className="hover:text-white transition-colors">Decoração Curada</Link></li>
-          </ul>
-        </div>
-
-        <div className="space-y-6">
-          <h3 className="text-brand-accent font-serif text-lg mb-6">Contato</h3>
-          <div className="flex items-start space-x-3 text-brand-muted text-sm">
-            <Phone size={18} className="text-brand-accent mt-1" />
-            <div>
-              <p>(45) 3526-4647</p>
-              <p>Av José Maria de Brito, 2094</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3 text-brand-muted text-sm">
-            <MessageCircle size={18} className="text-brand-accent" />
-            <p>WhatsApp: (45) 3526-4647</p>
-          </div>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-xs text-brand-muted uppercase tracking-[0.2em]">
-        © {new Date().getFullYear()} Empório das Cortinas. Todos os direitos reservados.
+    <footer className="bg-black text-white/60 py-8 px-4 text-center text-sm border-t border-white/10">
+      <div className="max-w-7xl mx-auto">
+        <p>&copy; {new Date().getFullYear()} Empório das Cortinas. Todos os direitos reservados.</p>
+        <p className="mt-1 text-xs text-white/40">
+          Desenvolvido com ❤️ para você.
+        </p>
       </div>
     </footer>
   );
 };
+
+export default Navbar;
